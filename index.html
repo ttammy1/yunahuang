@@ -67,6 +67,7 @@ a{color:inherit;text-decoration:none}
 .reveal span{color:var(--faint);transition:color .25s}
 .reveal span.on{color:var(--ink)}
 .reveal span.k.on{color:var(--purple)}
+.reveal .kw{white-space:nowrap}
 
 /* projects */
 .proj-head{display:flex;justify-content:space-between;align-items:flex-end;margin-top:200px}
@@ -281,7 +282,7 @@ a{color:inherit;text-decoration:none}
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});[].forEach.call(RS,function(el){io.observe(el)})}else{[].forEach.call(RS,function(el){el.classList.add('in')})}
   // scroll reveal, character by character
   var R=document.getElementById('reveal'),txt=R.textContent,hot=[];R.dataset.k.split('|').forEach(function(k){var i=txt.indexOf(k);if(i>=0)for(var j=i;j<i+k.length;j++)hot[j]=1});R.innerHTML='';
-  var spans=[].map.call(txt,function(c,i){var s=document.createElement('span');s.textContent=c;if(hot[i])s.className='k';R.appendChild(s);return s});
+  var G=null,spans=[].map.call(txt,function(c,i){var s=document.createElement('span');s.textContent=c;if(hot[i]){s.className='k';if(!G){G=document.createElement('span');G.className='kw';R.appendChild(G)}G.appendChild(s)}else{G=null;R.appendChild(s)}return s});
   var AB=document.getElementById('about'),WK=document.getElementById('work'),PIN=AB.querySelector('.pin');function fade(){if(reduce)return;var vh=innerHeight,q=(vh-BR.getBoundingClientRect().top)/(vh*0.55);q=Math.max(0,Math.min(1,q));PIN.style.opacity=1-q;PIN.style.transform='translateY('+(-q*60)+'px) scale('+(1-q*.04)+')'}addEventListener('scroll',fade,{passive:true});function upd(){fade();var r=AB.getBoundingClientRect(),vh=innerHeight,k=(-r.top+vh*0.1)/(r.height-vh*1.5);k=Math.max(0,Math.min(1,k));var n=Math.round(k*spans.length);spans.forEach(function(s,i){s.classList.toggle('on',reduce||i<n)})}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
   // cursor
